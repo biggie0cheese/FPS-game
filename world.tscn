@@ -1,0 +1,40 @@
+[gd_scene load_steps=7 format=3 uid="uid://bn3ypsajvmbbl"]
+
+[ext_resource type="PackedScene" uid="uid://bjlnnnj6wj4um" path="res://player.tscn" id="1_x1t2r"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jc7si"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atbx5"]
+albedo_color = Color(0, 0.786667, 0.8, 1)
+
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_shvgu"]
+
+[sub_resource type="Sky" id="Sky_b8ng1"]
+sky_material = SubResource("ProceduralSkyMaterial_shvgu")
+
+[sub_resource type="Environment" id="Environment_431eo"]
+background_mode = 2
+sky = SubResource("Sky_b8ng1")
+
+[node name="World" type="Node3D"]
+
+[node name="CSGBox3D" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+size = Vector3(25, 25, 25)
+material = SubResource("StandardMaterial3D_jc7si")
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="."]
+transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 25, 0)
+size = Vector3(440.246, 25, 212.416)
+material = SubResource("StandardMaterial3D_atbx5")
+
+[node name="Player" parent="." instance=ExtResource("1_x1t2r")]
+transform = Transform3D(-24.1023, 0, -6.63932, 0, 25, 0, 6.63932, 0, -24.1023, -17.1929, 76.831, -91.4041)
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(0.986057, 0, 0.166407, 0, 1, 0, -0.166407, 0, 0.986057, 3.42782, 75.3793, 31.352)
+light_indirect_energy = 0.0
+light_angular_distance = 14.55
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="."]
+environment = SubResource("Environment_431eo")
