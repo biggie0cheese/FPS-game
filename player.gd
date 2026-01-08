@@ -25,5 +25,7 @@ func _physics_process(delta: float) -> void:
 	var direction = transform.basis * input_direction_3D
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
-	
+	#jumping
+	#gravity
+	#y direction
 	move_and_slide()
