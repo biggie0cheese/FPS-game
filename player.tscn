@@ -1,9 +1,15 @@
-[gd_scene load_steps=2 format=3 uid="uid://bjlnnnj6wj4um"]
+[gd_scene load_steps=4 format=3 uid="uid://bjlnnnj6wj4um"]
+
+[ext_resource type="Script" path="res://player.gd" id="1_yd3mj"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rbeme"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_44ptp"]
+albedo_color = Color(0.8, 0, 0, 1)
+
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+script = ExtResource("1_yd3mj")
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("CapsuleShape3D_rbeme")
@@ -17,7 +23,9 @@ transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 0, 0)
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 1.14919, 0)
 size = Vector3(1.12402, 0.108276, 1.12793)
+material = SubResource("StandardMaterial3D_44ptp")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 1.07535, -0.727783)
 size = Vector3(0.958984, 0.0365295, 0.339355)
+material = SubResource("StandardMaterial3D_44ptp")
