@@ -16,16 +16,19 @@ shape = SubResource("CapsuleShape3D_rbeme")
 
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.672095, 0)
+cull_mask = 1048559
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 0, 0)
 
 [node name="CSGBox3D2" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 1.14919, 0)
+layers = 16
 size = Vector3(1.12402, 0.108276, 1.12793)
 material = SubResource("StandardMaterial3D_44ptp")
 
 [node name="CSGBox3D3" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 1.07535, -0.727783)
+layers = 16
 size = Vector3(0.958984, 0.0365295, 0.339355)
 material = SubResource("StandardMaterial3D_44ptp")

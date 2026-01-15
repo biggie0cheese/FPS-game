@@ -5,6 +5,16 @@ extends CharacterBody3D
 #constrain the mouse
 #we need to jump
 #capture the mouse
+@export var gravity:float = 250
+var jumps:int = 0
+var max_jumps = 2
+
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
+
+
 
 func _unhandled_input(event: InputEvent) -> void:
 	if event is InputEventMouseMotion:
@@ -13,6 +23,18 @@ func _unhandled_input(event: InputEvent) -> void:
 		#rotate up and down
 		$Camera3D.rotation_degrees.x -= event.screen_relative.y * (sensitivity * .01)
 		$Camera3D.rotation_degrees.x = clamp($Camera3D.rotation_degrees.x, -85, 85)
+
+func _process(delta: float) -> void:
+	if Input.is_action_just_pressed("quit"):
+		get_tree().quit()
+	if Input.is_action_just_pressed("restart"):
+		get_tree().reload_current_scene()
+	if Input.is_action_just_pressed("fullscreen"):
+		var fs = DisplayServer.window_get_mode() == DisplayServer.WINDOW_MODE_FULLSCREEN
+		if fs:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_WINDOWED)
+		else:
+			DisplayServer.window_set_mode(DisplayServer.WINDOW_MODE_FULLSCREEN)
 
 
 func _physics_process(delta: float) -> void:
@@ -25,7 +47,17 @@ func _physics_process(delta: float) -> void:
 	var direction = transform.basis * input_direction_3D
 	velocity.x = direction.x * SPEED
 	velocity.z = direction.z * SPEED
-	#jumping
+	### jumping ###
 	#gravity
+	velocity.y -= gravity *delta
+	if Input.is_action_just_pressed("Jump") and jumps < max_jumps:#is_on_floor():
+		velocity.y =200
+		jumps += 1
+	elif Input.is_action_just_released("Jump") and velocity.y > 0:
+		velocity.y = velocity.y / 2
+	
+	
+	if is_on_floor():
+		jumps = 0
 	#y direction
 	move_and_slide()
