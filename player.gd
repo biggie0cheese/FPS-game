@@ -7,7 +7,7 @@ extends CharacterBody3D
 #capture the mouse
 @export var gravity:float = 250
 var jumps:int = 0
-var max_jumps = 2
+var max_jumps = 1
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
@@ -51,10 +51,10 @@ func _physics_process(delta: float) -> void:
 	#gravity
 	velocity.y -= gravity *delta
 	if Input.is_action_just_pressed("Jump") and jumps < max_jumps:#is_on_floor():
-		velocity.y =200
+		velocity.y =10
 		jumps += 1
 	elif Input.is_action_just_released("Jump") and velocity.y > 0:
-		velocity.y = velocity.y / 2
+		velocity.y = velocity.y / 2.5
 	
 	
 	if is_on_floor():

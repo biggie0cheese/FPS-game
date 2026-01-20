@@ -1,0 +1,16 @@
+[gd_scene load_steps=4 format=3 uid="uid://tw6tcwdpj5td"]
+
+[ext_resource type="PackedScene" uid="uid://j5bom2mjlt8f" path="res://Gun/projectile_model.glb" id="1_abply"]
+[ext_resource type="Shader" path="res://Gun/projectile.gdshader" id="2_flxi8"]
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_kiow2"]
+render_priority = 0
+shader = ExtResource("2_flxi8")
+shader_parameter/tail_color = Color(1, 0.34902, 0, 1)
+shader_parameter/head_color = Color(1, 0.583333, 0, 1)
+
+[node name="projectile_model" instance=ExtResource("1_abply")]
+
+[node name="Projectile" parent="." index="0"]
+transform = Transform3D(4.68972e-14, 1.31134e-07, -1, -1, 3.57628e-07, -1.69407e-21, 3.57628e-07, 1, 1.31134e-07, 0, 0, 0)
+material_override = SubResource("ShaderMaterial_kiow2")

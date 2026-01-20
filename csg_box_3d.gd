@@ -1,5 +1,5 @@
 extends CSGBox3D
-
+var starting_position = Vector3(position.x,position.y,position.z)
 var spin = 0
 # Called when the node enters the scene tree for the first time.
 func _ready() -> void:
@@ -10,4 +10,6 @@ func _ready() -> void:
 func _process(delta: float) -> void:
 	rotation.y+= .03
 	spin += 1
-	position.y= 10*sin(0.05*spin)+60
+	position.x = starting_position.x
+	position.y = starting_position.y + sin(spin*0.1)/2
+	position.z = starting_position.z

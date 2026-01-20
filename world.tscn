@@ -15,7 +15,6 @@ emission_texture = ExtResource("1_m41h1")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_atbx5"]
 albedo_color = Color(0, 0.983334, 1, 1)
 albedo_texture = ExtResource("2_ckrxj")
-uv1_scale = Vector3(0.1, 0.1, 0.1)
 uv1_triplanar = true
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_shvgu"]
@@ -30,20 +29,19 @@ sky = SubResource("Sky_b8ng1")
 [node name="World" type="Node3D"]
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 50, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5.17415, 27.0874, 0)
 use_collision = true
-size = Vector3(25, 25, 25)
 material = SubResource("StandardMaterial3D_jc7si")
 script = ExtResource("1_t4k0n")
 
-[node name="CSGBox3D2" type="CSGBox3D" parent="."]
-transform = Transform3D(5, 0, 0, 0, 1, 0, 0, 0, 5, 0, 25, 0)
+[node name="Floor" type="CSGBox3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 25, 0)
 use_collision = true
-size = Vector3(440.246, 25, 212.416)
+size = Vector3(40, 1, 40)
 material = SubResource("StandardMaterial3D_atbx5")
 
 [node name="Player" parent="." instance=ExtResource("1_x1t2r")]
-transform = Transform3D(20, 0, 0, 0, 20, 0, 0, 0, 20, -17.1929, 76.831, -91.4041)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 26.7354, 0)
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
 environment = SubResource("Environment_431eo")
