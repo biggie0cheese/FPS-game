@@ -61,3 +61,19 @@ func _physics_process(delta: float) -> void:
 		jumps = 0
 	#y direction
 	move_and_slide()
+	
+	if Input.is_action_pressed("Shoot") and %BulletTimer.is_stopped():
+		shoot_bullet()
+		%BulletTimer.start()
+	
+	
+	
+func shoot_bullet():
+	const BULLET_3D = preload("res://projectile.tscn")
+	var new_bullet = BULLET_3D.instantiate()
+	%ProjectileSpawn.add_child(new_bullet)
+	new_bullet.transform = %ProjectileSpawn.global_transform
+	
+	%"Muzzle Light".visible = true
+	await get_tree().create_timer(0.1).timeout
+	%"Muzzle Light".visible = false
