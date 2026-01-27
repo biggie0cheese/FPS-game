@@ -1,4 +1,4 @@
-[gd_scene load_steps=8 format=3 uid="uid://bjlnnnj6wj4um"]
+[gd_scene load_steps=13 format=3 uid="uid://bjlnnnj6wj4um"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_yd3mj"]
 [ext_resource type="PackedScene" uid="uid://ba3p4vx8u6gt7" path="res://Gun/gun_model.glb" id="2_4jtf4"]
@@ -6,15 +6,40 @@
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rbeme"]
 
+[sub_resource type="Gradient" id="Gradient_jjx4m"]
+colors = PackedColorArray(0, 0, 1, 1, 0.533333, 0, 1, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_nu0i8"]
+gradient = SubResource("Gradient_jjx4m")
+
+[sub_resource type="Curve" id="Curve_e5u0f"]
+_data = [Vector2(0, 1), 0.0, 0.0, 0, 0, Vector2(0.992754, 0.472527), -0.735265, 0.0, 0, 0]
+point_count = 2
+
+[sub_resource type="CurveTexture" id="CurveTexture_6gmol"]
+curve = SubResource("Curve_e5u0f")
+
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_v0aks"]
 lifetime_randomness = 1.0
+particle_flag_rotate_y = true
+angle_min = -180.0
+angle_max = 180.0
 direction = Vector3(0, 0, 1)
 spread = 15.0
-initial_velocity_min = 17.25
-initial_velocity_max = 17.25
+initial_velocity_min = 5.0
+initial_velocity_max = 5.0
 gravity = Vector3(0, 0, 0)
+scale_max = 6.0
+scale_curve = SubResource("CurveTexture_6gmol")
+color_ramp = SubResource("GradientTexture1D_nu0i8")
+turbulence_noise_strength = 0.0
+turbulence_noise_scale = 3.755
 
-[sub_resource type="SphereMesh" id="SphereMesh_nyjau"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxn8c"]
+vertex_color_use_as_albedo = true
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_ke4pw"]
+material = SubResource("StandardMaterial3D_mxn8c")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_44ptp"]
 albedo_color = Color(0.8, 0, 0, 1)
@@ -49,11 +74,10 @@ light_energy = 16.0
 
 [node name="GPUParticles3D" type="GPUParticles3D" parent="Camera3D/Node3D/gun_model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-08, 0, 0.6)
-amount = 10000
-lifetime = 10.0
-explosiveness = 1.0
+amount = 100
+lifetime = 4.0
 process_material = SubResource("ParticleProcessMaterial_v0aks")
-draw_pass_1 = SubResource("SphereMesh_nyjau")
+draw_pass_1 = SubResource("PlaneMesh_ke4pw")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 0, 0)

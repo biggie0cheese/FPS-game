@@ -65,6 +65,7 @@ func _physics_process(delta: float) -> void:
 	if Input.is_action_pressed("Shoot") and %BulletTimer.is_stopped():
 		shoot_bullet()
 		%BulletTimer.start()
+		
 	
 	
 	
