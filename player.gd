@@ -6,6 +6,7 @@ extends CharacterBody3D
 #we need to jump
 #capture the mouse
 @export var gravity:float = 250
+@onready var animationPlayer = $AnimationPlayer
 var jumps:int = 0
 var max_jumps = 1
 
@@ -74,7 +75,7 @@ func shoot_bullet():
 	var new_bullet = BULLET_3D.instantiate()
 	%ProjectileSpawn.add_child(new_bullet)
 	new_bullet.transform = %ProjectileSpawn.global_transform
-	
-	%"Muzzle Light".visible = true
-	await get_tree().create_timer(0.1).timeout
-	%"Muzzle Light".visible = false
+	animationPlayer.play("Recoil")
+	#%"Muzzle Light".visible = true
+	#await get_tree().create_timer(0.1).timeout
+	#%"Muzzle Light".visible = false

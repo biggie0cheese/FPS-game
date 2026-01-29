@@ -1,10 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://bjlnnnj6wj4um"]
+[gd_scene load_steps=20 format=3 uid="uid://bjlnnnj6wj4um"]
 
 [ext_resource type="Script" path="res://player.gd" id="1_yd3mj"]
 [ext_resource type="PackedScene" uid="uid://ba3p4vx8u6gt7" path="res://Gun/gun_model.glb" id="2_4jtf4"]
+[ext_resource type="Texture2D" uid="uid://dv0unswde1yew" path="res://wispy_smoke_01_8x8.tga" id="3_4pyk5"]
 [ext_resource type="Texture2D" uid="uid://kadyqotabci" path="res://Gun/reticle.png" id="3_vobti"]
+[ext_resource type="Texture2D" uid="uid://dthr5ftrn6cmn" path="res://explosion_02_8x8.tga" id="4_tpfuf"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_rbeme"]
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_c3lcy"]
+transparency = 1
+blend_mode = 1
+albedo_texture = ExtResource("3_4pyk5")
 
 [sub_resource type="Gradient" id="Gradient_jjx4m"]
 colors = PackedColorArray(0, 0, 1, 1, 0.533333, 0, 1, 1)
@@ -24,25 +31,97 @@ lifetime_randomness = 1.0
 particle_flag_rotate_y = true
 angle_min = -180.0
 angle_max = 180.0
-direction = Vector3(0, 0, 1)
-spread = 15.0
-initial_velocity_min = 5.0
-initial_velocity_max = 5.0
-gravity = Vector3(0, 0, 0)
+direction = Vector3(0, 0.2, 0.1)
+initial_velocity_max = 1.0
+gravity = Vector3(0, 0.1, 0)
+linear_accel_min = -2.23517e-06
+linear_accel_max = -2.23517e-06
+damping_min = 0.1
+damping_max = 1.0
 scale_max = 6.0
 scale_curve = SubResource("CurveTexture_6gmol")
 color_ramp = SubResource("GradientTexture1D_nu0i8")
 turbulence_noise_strength = 0.0
 turbulence_noise_scale = 3.755
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_mxn8c"]
-vertex_color_use_as_albedo = true
+[sub_resource type="PlaneMesh" id="PlaneMesh_g16jg"]
+size = Vector2(0.05, 0.05)
+orientation = 2
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_ke4pw"]
-material = SubResource("StandardMaterial3D_mxn8c")
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_jrt8g"]
+transparency = 1
+albedo_texture = ExtResource("4_tpfuf")
+emission_enabled = true
+emission = Color(1, 0.55, 0, 1)
+emission_energy_multiplier = 2.45
+billboard_mode = 3
+particles_anim_h_frames = 5
+particles_anim_v_frames = 5
+particles_anim_loop = false
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_dq50m"]
+orientation = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_44ptp"]
 albedo_color = Color(0.8, 0, 0, 1)
+
+[sub_resource type="Animation" id="Animation_40v8e"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Node3D/gun_model/GunFire:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Node3D/gun_model")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0, 0, 0)
+
+[sub_resource type="Animation" id="Animation_c73ao"]
+resource_name = "Recoil"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Camera3D/Node3D/gun_model/GunFire:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0666667),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [true, false]
+}
+tracks/1/type = "position_3d"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Camera3D/Node3D/gun_model")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = PackedFloat32Array(0, 1, 0.7, 0, -0.4, 0.1, 1, 0.7, -0.3, -0.7)
+tracks/2/type = "rotation_3d"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Camera3D/Node3D/gun_model")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = PackedFloat32Array(0, 1, 0, 1, 0, 0, 0.1, 1, 0, 1, 0, 0)
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_3ay8c"]
+_data = {
+"RESET": SubResource("Animation_40v8e"),
+"Recoil": SubResource("Animation_c73ao")
+}
 
 [node name="Player" type="CharacterBody3D"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -59,7 +138,7 @@ cull_mask = 1048559
 [node name="Node3D" type="Node3D" parent="Camera3D"]
 
 [node name="gun_model" parent="Camera3D/Node3D" instance=ExtResource("2_4jtf4")]
-transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0.983494, -0.739285, -1.4621)
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 0, 0, 0)
 
 [node name="ProjectileSpawn" type="Marker3D" parent="Camera3D/Node3D/gun_model"]
 unique_name_in_owner = true
@@ -72,12 +151,24 @@ visible = false
 light_color = Color(1, 0.383333, 0, 1)
 light_energy = 16.0
 
-[node name="GPUParticles3D" type="GPUParticles3D" parent="Camera3D/Node3D/gun_model"]
+[node name="GunSmoke" type="GPUParticles3D" parent="Camera3D/Node3D/gun_model"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-08, 0, 0.6)
-amount = 100
+material_override = SubResource("StandardMaterial3D_c3lcy")
+emitting = false
+amount = 10000
 lifetime = 4.0
 process_material = SubResource("ParticleProcessMaterial_v0aks")
-draw_pass_1 = SubResource("PlaneMesh_ke4pw")
+draw_pass_1 = SubResource("PlaneMesh_g16jg")
+
+[node name="GunFire" type="GPUParticles3D" parent="Camera3D/Node3D/gun_model"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -5.96046e-08, 0, 0.6)
+material_override = SubResource("StandardMaterial3D_jrt8g")
+amount = 1
+lifetime = 0.6
+one_shot = true
+speed_scale = 0.0
+process_material = SubResource("ParticleProcessMaterial_v0aks")
+draw_pass_1 = SubResource("PlaneMesh_dq50m")
 
 [node name="CSGBox3D" type="CSGBox3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 2.05849, 0, 0, 0, 1, 0, 0, 0)
@@ -115,3 +206,8 @@ unique_name_in_owner = true
 wait_time = 0.1
 one_shot = true
 autostart = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_3ay8c")
+}
